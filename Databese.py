@@ -4,9 +4,7 @@ class AirQualityDatabase:
     def __init__(self, user, password, host, port="5432", db_name="air_quality"):
         self.db_name = db_name
         self.conn = connect(database=db_name, user=user, password=password, host=host, port=port)
-        print(self.conn)
         self.cursor = self.conn.cursor()
-        print(self.cursor)
 
     def add_station(self, data):
         self.cursor.execute(
