@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2 import connect
 
 class AirQualityDatabase:
-    def __init__(self, user,password, host="192.168.0.147", port="5432", db_name="air_quality"):
+    def __init__(self, user, password, host, port="5432", db_name="air_quality"):
         self.db_name = db_name
         self.conn = connect(database=db_name, user=user, password=password, host=host, port=port)
         self.cursor = self.conn.cursor()

@@ -1,9 +1,14 @@
+import os
 from time import sleep
 from air_quality_data import get_data
 from Databese import AirQualityDatabase
-
+from dotenv import load_dotenv
 def main():
-    db = AirQualityDatabase('wojtek', "WoJtek92!")
+    load_dotenv()
+    user = os.getenv("USER")
+    password =os.getenv('PASSWORD')
+    host = os.getenv("HOST")
+    db = AirQualityDatabase(user, password, host=host)
     for ids in db.get_data("Sensors"):
         data = get_data(ids[0])
         key = data["key"]
