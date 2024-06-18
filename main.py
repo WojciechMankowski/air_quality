@@ -8,6 +8,7 @@ def main():
     user = os.getenv("USER")
     password =os.getenv('PASSWORD')
     host = os.getenv("HOST")
+    print(user, password, host)
     db = AirQualityDatabase(user, password, host=host)
     for ids in db.get_data("Sensors"):
         data = get_data(ids[0])

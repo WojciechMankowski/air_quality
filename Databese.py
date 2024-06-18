@@ -1,16 +1,17 @@
-import psycopg2
 from psycopg2 import connect
 
 class AirQualityDatabase:
     def __init__(self, user, password, host, port="5432", db_name="air_quality"):
         self.db_name = db_name
         self.conn = connect(database=db_name, user=user, password=password, host=host, port=port)
+        print(self.conn)
         self.cursor = self.conn.cursor()
+        print(self.cursor)
 
     def add_station(self, data):
         self.cursor.execute(
             """
-            INSERT INTO Station (id, stationName, gegrLat, gegrLon, cityName, communeName, districtName, provinceName, addressStreet)
+            INSERT INTO station (id, stationName, gegrLat, gegrLon, cityName, communeName, districtName, provinceName, addressStreet)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
             (
