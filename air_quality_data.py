@@ -1,5 +1,4 @@
 from datetime import datetime
-
 import requests
 
 # URL API
@@ -23,7 +22,7 @@ def get_sensors(station_id):
 
 
 def get_data(sensor_id):
-    """Pobiera dane historyczne dla danego stanowiska pomiarowego."""
+    """Pobiera dane archiwalne dla danego stanowiska pomiarowego."""
     size = datetime.now().hour
     url = BASE_URL + f"data/getData/{sensor_id}?size={size}&sort=Data"
     response = requests.get(url)
@@ -32,7 +31,7 @@ def get_data(sensor_id):
 
 
 def get_archival_data(sensor_id):
-    """Pobiera dane archiwalne dla danego stanowiska pomiarowego."""
+    """Pobiera dane historyczne dla danego stanowiska pomiarowego."""
     days = (datetime.now() - datetime(2024, 6, 1)).days
     url = BASE_URL + f"archivalData/getDataBySensor/{sensor_id}?size=500&dayNumber={1}"
 
@@ -41,24 +40,3 @@ def get_archival_data(sensor_id):
     return response.json()["Lista archiwalnych wyników pomiarów"]
 
 
-def main():
-    # Pobierz listę stacji pomiarowych
-    stations = get_stations()
-
-    # Wybierz pierwszą stację (dla przykładu)
-    station_id = stations[0]["id"]
-    station_name = stations[0]["stationName"]
-    print(f"Wybrana stacja: {station_name} (ID: {station_id})")
-
-    # Pobierz listę stanowisk pomiarowych dla wybranej stacji
-    sensors = get_sensors(station_id)
-    for sensor in sensors:
-        print(sensor)
-    # Wybierz pierwsze stanowisko pomiarowe (dla przykładu)
-    sensor_id = sensors[0]["id"]
-    sensor_param = sensors[0]["param"]["paramName"]
-    print(f"Wybrane stanowisko: {sensor_param} (ID: {sensor_id})")
-
-
-if __name__ == "__main__":
-    main()
