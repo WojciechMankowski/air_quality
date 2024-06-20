@@ -88,7 +88,7 @@ class AirQualityDatabase:
                 """
                 UPDATE air_quality
                 SET value = %s
-                WHERE pollutant = %s AND measurement_date = %s AND sensor_id = %s
+                WHERE pollutant = %s AND measurement_date = %s AND sensors_id = %s
                 """,
                 (value, key, date, sensor_id),
             )
