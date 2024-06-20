@@ -48,7 +48,7 @@ def main():
         for id in city_id:
             hour = datetime.now().hour
             data = get_data(id)
-            ids = create_id(db)
+            ids = db.get_id("air_quality")[-1][0] + 1
             print(ids)
             key = data['key']
             values = data['values'][:hour + 1]
