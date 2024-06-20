@@ -75,7 +75,7 @@ class AirQualityDatabase:
         self.cursor.execute(
             """
             SELECT 1 FROM air_quality
-            WHERE pollutant = %s AND measurement_date = %s AND sensor_id = %s
+            WHERE pollutant = %s AND measurement_date = %s AND sensors_id = %s
             """,
             (key, date, sensor_id),
         )
