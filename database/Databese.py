@@ -70,7 +70,7 @@ class AirQualityDatabase:
         self.cursor.execute(f"SELECT Id FROM {name_table}")
         return self.cursor.fetchall()
 
-    def add_air_quality_data(self, id, key, date, value, sensor_id):
+    def add_air_quality_data(self, key, date, value, sensor_id):
         # Sprawdzenie czy dane już istnieją
         self.cursor.execute(
             """
@@ -96,10 +96,10 @@ class AirQualityDatabase:
             # Dane nie istnieją, wykonaj INSERT
             self.cursor.execute(
                 """
-                INSERT INTO air_quality (id, pollutant, measurement_date, value, sensor_id)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO air_quality (pollutant, measurement_date, value, sensor_id)
+                VALUES ( %s, %s, %s, %s)
                 """,
-                (id, key, date, value, sensor_id),
+                (key, date, value, sensor_id),
             )
 
         self.conn.commit()

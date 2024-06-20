@@ -57,7 +57,7 @@ def main():
             values = data['values'][:hour + 1]
             for item in values:
                 print(item)
-                db.add_air_quality_data(ids, key, item['date'], item['value'], id)
+                db.add_air_quality_data(key, item['date'], item['value'], id)
 
 
 if __name__ == '__main__':
