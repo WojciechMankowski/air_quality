@@ -17,7 +17,6 @@ def create_id(db):
 
 def main():
     # pobranie id dla sensorów
-    data = get_data_id_sensor()
     # iniclazcja bazy danych
     load_dotenv()
     user = getenv("USER")
@@ -25,6 +24,13 @@ def main():
     host = getenv("HOST")
     db = AirQualityDatabase(user, password, host=host)
     # zapisanie id dla największych miast
+    query = 'SELECT cityname, id FROM station'
+    _data = db.query(query)
+    data = []
+    for city in _data:
+        query2 = f'SELECT id FROM sensors WHERE stationid = {city[1]}'
+        data_sensors = db.query(query2)
+        data.append({city[0]: data_sensors[0][0]})
     cities = [
         get_bydgoszcz_sensors(data),
         get_gdansk_sensors(data),

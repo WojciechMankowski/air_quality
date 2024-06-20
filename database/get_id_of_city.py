@@ -16,7 +16,6 @@ def get_data_id_sensor() -> List[dict[str, int]]:
     data = db.query(query)
     data_id_sensors = []
     for city in data:
-
         query2 = f'SELECT id FROM sensors WHERE stationid = {city[1]}'
         data_sensors = db.query(query2)
         data_id_sensors.append({city[0]: data_sensors[0][0]})
