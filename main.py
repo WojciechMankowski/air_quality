@@ -50,9 +50,9 @@ def main():
         for id in city_id:
             hour = datetime.now().hour
             data = get_data(id)
-            sleep(5)
-            ids = db.get_id("air_quality")[-1][0] + 1
-            print(ids)
+            identifiers = db.get_id("air_quality")
+            ids = identifiers[-1][0] + 1
+            print(ids in identifiers)
             key = data['key']
             values = data['values'][:hour + 1]
             for item in values:
