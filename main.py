@@ -1,62 +1,55 @@
-import os, time
-from datetime import datetime
-from time import sleep
 from dotenv import load_dotenv
+from database.get_id_of_city import get_data_id_sensor
+from database.sensor_id_for_cities import *
 from database.Databese import AirQualityDatabase
 from air_quality_data import get_data
-from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+from os import getenv
 
 
-def initialize_database():
-    """Stwórz instancję obiektu bazy danych"""
-    load_dotenv()
-    user = os.getenv("USER")
-    password = os.getenv("PASSWORD")
-    host = os.getenv("HOST")
-    return AirQualityDatabase(user, password, host=host)
-
-
-def add_air_quality_data(db, key, item, sensor_id):
-    """Zapisz dane do bazy danych"""
-    db.add_air_quality_data(key, item["date"], item["value"], sensor_id)
-
-
-def process_values(db, key, values, sensor_id):
-    """Sprawdź datę pomiaru i zapisz do bazy danych, jeśli jest dzisiaj"""
-    if isinstance(values, list):
-        today_str = datetime.today().strftime("%Y-%m-%d")
-        for item in values:
-            if item['date'][:10] == today_str:
-                add_air_quality_data(db, key, item, sensor_id)
-                sleep(1)  # zmniejszony czas sleep dla demonstracji
-
-
-def process_sensor_data(db, ids):
-    """Przetwarzaj dane dla pojedynczego sensora"""
-    data = get_data(ids[0])
-    key = data["key"]
-    values = data["values"]
-    process_values(db, key, values, ids[0])
+def create_id(db):
+    ids = db.get_id("air_quality")
+    if len(ids) != 0:
+        return db.get_id("air_quality")[-1][0] + 1
+    else:
+        return 1
 
 
 def main():
-    db = initialize_database()
-    sensor_ids = db.get_data("Sensors")
-    num_operations = len(sensor_ids)
+    # pobranie id dla sensorów
+    data = get_data_id_sensor()
+    # iniclazcja bazy danych
+    load_dotenv()
+    user = getenv("USER")
+    password = getenv("PASSWORD")
+    host = getenv("HOST")
+    db = AirQualityDatabase(user, password, host=host)
+    # zapisanie id dla największych miast
+    cities = [
+        get_bydgoszcz_sensors(data),
+        get_gdansk_sensors(data),
+        get_krakow_sensors(data),
+        get_lodz_sensors(data),
+        get_wroclaw_sensors(data),
+        get_poznan_sensors(data),
+        get_szczecin_sensors(data),
+        get_lublin_sensors(data),
+        get_katowice_sensors(data),
+        get_warsaw_sensors(data)
+    ]
+    # pobieranie danych z API
+    for city_id in cities:
+        for id in city_id:
+            hour = datetime.now().hour
+            data = get_data(id)
+            ids = create_id(db)
+            key = data['key']
+            values = data['values'][:hour + 1]
+            for item in values:
+                print(item)
+                db.add_air_quality_data(ids, key, item['date'], item['value'], id)
 
-    start_time = time.time()
 
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = [executor.submit(process_sensor_data, db, ids) for ids in sensor_ids]
-        for future in futures:
-            future.result()
-
-    end_time = time.time()
-    total_time = end_time - start_time
-
-    print(f"Liczba operacji: {num_operations}")
-    print(f"Czas trwania każdej operacji (średnio): {total_time / num_operations:.2f} sekundy")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    while True:
+        main()
