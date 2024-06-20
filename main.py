@@ -49,6 +49,7 @@ def main():
             hour = datetime.now().hour
             data = get_data(id)
             ids = create_id(db)
+            print(ids)
             key = data['key']
             values = data['values'][:hour + 1]
             for item in values:
