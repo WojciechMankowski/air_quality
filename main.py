@@ -55,7 +55,6 @@ def main():
             key = data['key']
             values = data['values'][:hour + 1]
             for item in values:
-                print(item)
                 db.add_air_quality_data(key, item['date'], item['value'], id)
 
 
