@@ -97,7 +97,7 @@ class AirQualityDatabase:
 
             self.cursor.execute(
                 """
-                INSERT INTO air_quality (pollutant, measurement_date, value, sensor_id)
+                INSERT INTO air_quality (pollutant, measurement_date, value, sensors_id)
                 VALUES (%s, %s, %s, %s) 
                 """,
                 (key, date, value, sensor_id),
