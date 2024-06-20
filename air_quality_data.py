@@ -24,7 +24,7 @@ def get_sensors(station_id):
 def get_data(sensor_id):
     """Pobiera dane archiwalne dla danego stanowiska pomiarowego."""
     size = datetime.now().hour
-    url = BASE_URL + f"data/getData/{sensor_id}?size={size}&sort=Data"
+    url = BASE_URL + f"data/getData/{sensor_id}?size={size + 2}"
     response = requests.get(url)
     response.raise_for_status()
     return response.json()

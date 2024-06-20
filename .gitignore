@@ -7,6 +7,9 @@ __pycache__/
 .env
 # C extensions
 *.so
+t.py
+t2.py
+testowy.py
 
 # Distribution / packaging
 .Python
