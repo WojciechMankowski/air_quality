@@ -94,12 +94,15 @@ class AirQualityDatabase:
             )
         else:
             # Dane nie istnieją, wykonaj INSERT
+            id = self.cursor.execute("SELECT id FROM air_quality")
+            data = self.cursor.fetchall()
+            print(data[-1])
             self.cursor.execute(
                 """
-                INSERT INTO air_quality (pollutant, measurement_date, value, sensor_id)
-                VALUES ( %s, %s, %s, %s)
+                INSERT INTO air_quality (id, pollutant, measurement_date, value, sensor_id)
+                VALUES (%s, %s, %s, %s, %s)
                 """,
-                (key, date, value, sensor_id),
+                (id, key, date, value, sensor_id),
             )
 
         self.conn.commit()

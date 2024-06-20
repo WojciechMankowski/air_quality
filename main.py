@@ -52,7 +52,6 @@ def main():
             data = get_data(id)
             identifiers = db.get_id("air_quality")
             ids = identifiers[-1][0] + 1
-            print(ids in identifiers)
             key = data['key']
             values = data['values'][:hour + 1]
             for item in values:
