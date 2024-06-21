@@ -1,5 +1,5 @@
 from typing import List
-from database.get_id_of_city import get_id_sensor_of_city
+from dowland_data_for_city.database.get_id_of_city import get_id_sensor_of_city
 
 
 def get_warsaw_sensors(data: List[dict[str, int]]) -> List[int]:

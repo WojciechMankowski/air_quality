@@ -1,7 +1,7 @@
 from os import getenv
 from typing import List
 from dotenv import load_dotenv
-from database.Databese import AirQualityDatabase
+from dowland_data_for_city.database import AirQualityDatabase
 
 def data_save(data: List[dict[str, float]]):
     load_dotenv()
