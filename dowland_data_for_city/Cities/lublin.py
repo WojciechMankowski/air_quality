@@ -1,9 +1,8 @@
 from time import sleep
 from database.get_id_of_city import get_data_id_sensor_for_city
 from air_quality_data import get_data
-from data_filtering import data_filtering
-from data_save_to_database import data_save
-
+from dowland_data_for_city.data_filtering import data_filtering
+from dowland_data_for_city.data_save_to_database import data_save
 
 def main():
     city = "Lublin"
