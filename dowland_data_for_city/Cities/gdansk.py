@@ -1,3 +1,7 @@
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from time import sleep
 from database.get_id_of_city import get_data_id_sensor_for_city
 from air_quality_data import get_data
