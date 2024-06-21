@@ -1,6 +1,6 @@
 import os
 from typing import List
-from dowland_data_for_city.database.Databese import AirQualityDatabase
+from database.Databese import AirQualityDatabase
 from dotenv import load_dotenv
 
 
