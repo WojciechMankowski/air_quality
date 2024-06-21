@@ -4,7 +4,7 @@ CREATE TABLE air_quality (
     measurement_date timestamp not null ,
     value decimal,
     sensors_id integer not null REFERENCES sensors(id)
-)
+);
 
 
 SELECT

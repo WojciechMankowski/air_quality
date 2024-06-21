@@ -1,4 +1,5 @@
 from datetime import datetime
 def is_data_today(date: str) -> bool:
-    today = datetime.now().strftime("%Y-%m-%d")
-    return  today == date[:10]
+    now = datetime.now()
+    today = datetime(now.year, now.month, now.day, now.hour -1, 0, 0).strftime("%Y-%m-%d %H:%M:%S")
+    return  today == date

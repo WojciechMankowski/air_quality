@@ -5,8 +5,7 @@ from data_filtering import data_filtering
 from data_save_to_database import data_save
 
 
-def main():
-    city = "Bydgoszcz"
+def run_program(city: str):
     data_to_save = []
     data_id_sensors = [id_city[city] for id_city in get_data_id_sensor_for_city(city)]
     for id in data_id_sensors:
@@ -20,7 +19,26 @@ def main():
     data_save(data_to_save)
 
 
+def main():
+    cities = [
+        "Warszawa",
+        "Kraków",
+        "Łódź",
+        "Wrocław",
+        "Poznań",
+        "Gdańsk",
+        "Szczecin",
+        "Bydgoszcz",
+        "Lublin",
+        "Białystok"
+    ]
+    for city in cities:
+        run_program(city)
+
+
+
 if __name__ == '__main__':
-    while True:
-        main()
-        sleep(300)
+   while True:
+       main()
+       sleep(800)
+
